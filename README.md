@@ -601,7 +601,7 @@ Now, let's interact with the created multisig wallet clone contract.
 
 If you try to initialize the created clone, you should see something like this;
 
-![Initialize](Images/initialize.png)
+![New](Images/initial.png)
 
 The reason for this is that the contract was initialized through the minimal proxy factory and its implementation was designed to prevent the state of the contract from being initialized twice, which could potentially lead to an attack on the contract.
 
@@ -614,9 +614,13 @@ Only an address that belongs to the valid owners is able to successfully request
 
 **Approving a transaction**
 <br/>
-In order to authorize a transaction, only the authorized owners who were added during the contract creation can approve it. If an address that is not a valid owner attempts to trigger the approve function, the approval process will fail.
+
+To validate and approve a transaction, only the designated owners who were added during the contract creation are authorized to do so. If an address that is not a valid owner attempts to trigger the approve function, the transaction approval process will fail. Additionally, before a transaction can be executed, the quorum set must be reached, meaning that the minimum required number of owners must approve the transaction.
 
 ![Approve Transaction](Images/approve.png)
+
+You can then proceed to reading the state of the contract after writing to it.
+<br/>
 
 To create your own Minimal Proxy Multisig contract, you can replicate the following steps. By doing so, you will be able to deploy the contract and interact with it through celo explorer in a successful manner. Additionally, it is important to note that proper understanding and execution of these steps is crucial for ensuring the security and functionality of your contract.
 
