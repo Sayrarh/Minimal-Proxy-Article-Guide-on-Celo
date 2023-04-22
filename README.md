@@ -197,22 +197,24 @@ contract MultisigWallet {
   }
 
   function requestTransaction(
-    address _to,
-    uint80 _amount
-  ) external returns (uint256) {
-    isAnOwner(msg.sender);
-    notAddressZero(_to);
-    Transaction storage txn = _transactions[txnID];
-    txn.recipient = _to;
-    txn.amountRequested = _amount;
-    uint256 currentTxnID = txnID;
-    allTransactions.push(txn);
+  address _to,
+  uint80 _amount
+) external returns (uint256) {
+  isAnOwner(msg.sender);
+  notAddressZero(_to);
+  require(_amount > 0, "Invalid amount requested"); // New input validation check
+  Transaction storage txn = _transactions[txnID];
+  txn.recipient = _to;
+  txn.amountRequested = _amount;
+  uint256 currentTxnID = txnID;
+  allTransactions.push(txn);
 
-    txnID = txnID + 1;
+  txnID = txnID + 1;
 
-    emit TransactionRequested(msg.sender, currentTxnID, _to, _amount);
-    return currentTxnID;
-  }
+  emit TransactionRequested(msg.sender, currentTxnID, _to, _amount);
+  return currentTxnID;
+}
+
 
   function approveTransaction(uint256 _ID) external {
     isAnOwner(msg.sender);
