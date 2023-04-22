@@ -96,17 +96,28 @@ To begin setting up the Hardhat environment for your smart contract implementati
 mkdir multisig-wallet
 ```
 
-Once you have created the folder, you can initialize a new npm project inside it by running the following command:
+Next, navigate to your project folder using the ‘cd’ command, like so:
+
+```
+cd multisig-wallet
+```
+
+Once you have cd into the folder, you can initialize a new npm project inside it by running the following command:
 
 ```
 npm init -y
 ```
 
-This will create a “package.json” file in your project folder with default settings. Next, navigate to your project folder using the ‘cd’ command, like so:
+This will create a “package.json” file in your project folder with default settings.
+Run the following command to initialize the Hardhat environment and create some default configuration files and folders required for building and testing smart contracts.
 
 ```
-cd multisig-wallet
+npm install hardhat --save-dev
+npx hardhat
 ```
+
+We will be using a typescript project for this tutorial, so click on “Create a typescript project” and enter this and other prompt options.
+<br/>
 
 Finally, open your project folder in VScode by running this command in your terminal:
 
@@ -116,15 +127,6 @@ code .
 
 This will open up your project folder in Visual Studio Code, where you can start setting up your Hardhat environment and writing your smart contract code.
 <br/>
-
-Run the following command to initialize the Hardhat environment and create some default configuration files and folders required for building and testing smart contracts.
-
-```
-npm install hardhat --save-dev
-npx hardhat
-```
-
-We will be using a typescript project for this tutorial, so click on “Create a typescript project” and enter this and other prompt options.
 
 ### STEP 2 - Create your Smart Contracts
 
@@ -607,7 +609,14 @@ The reason for this is that the contract was initialized through the minimal pro
 <br/>
 
 Only an address that belongs to the valid owners is able to successfully request a transaction. If any address outside of the valid owners attempts to interact with these functions, the transaction would fail and revert.
+
 ![Request Transaction](Images/write2.png)
+
+**Approving a transaction**
+<br/>
+In order to authorize a transaction, only the authorized owners who were added during the contract creation can approve it. If an address that is not a valid owner attempts to trigger the approve function, the approval process will fail.
+
+![Approve Transaction](Images/approve.png)
 
 To create your own Minimal Proxy Multisig contract, you can replicate the following steps. By doing so, you will be able to deploy the contract and interact with it through celo explorer in a successful manner. Additionally, it is important to note that proper understanding and execution of these steps is crucial for ensuring the security and functionality of your contract.
 
