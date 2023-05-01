@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This article provides a comprehensive guide on building a Multi-signature Wallet Minimal Proxy on Celo Blockchain. In addition to providing a detailed explanation of the technical process involved in deploying the smart contract, I will also demonstrate how to interact with it. Multisig contracts are an essential tool for decentralized decision-making and governance, enabling multiple parties to authorize transactions on the blockchain.
+This article provides a comprehensive guide on building a Multi-signature Wallet Minimal Proxy on Celo Blockchain. In addition to providing a detailed explanation of the technical process involved in deploying the smart contract, I will also demonstrate how to interact with it. [Multisig contracts](https://www.bitpanda.com/academy/en/lessons/what-are-multi-signature-wallets-and-how-do-they-work/) are an essential tool for decentralized decision-making and governance, enabling multiple parties to authorize transactions on the blockchain.
 <br/>
 With the help of this article, you can follow the step-by-step instructions provided to create and utilize your own Multisig Wallet Minimal Proxy Contract on the Celo Blockchain. Whether you're a seasoned blockchain developer or a curious beginner, this article is sure to leave you feeling confident and empowered to leverage the power of Multisig contracts on the Celo network.
 
@@ -38,7 +38,7 @@ Upon completion of this article, you'll possess the knowledge and skills needed 
 
 ## Prerequisites
 
-- Understanding of Solidity: It is important to have a strong understanding of Solidity as it is the main programming language for creating smart contracts on Celo blockchain.
+- Understanding of Solidity: It is important to have a strong understanding of Solidity as it is the main programming language for creating smart contracts on the Celo blockchain.
 
 - Command line proficiency: Basic familiarity with using command line tools such as Terminal or Command Prompt is necessary for running commands and scripts.
 
@@ -46,19 +46,19 @@ Upon completion of this article, you'll possess the knowledge and skills needed 
 
 ## Requirements
 
-- A text editor: For this tutorial, we will make use of Visual Studio Code, so ensure you have VS Code setup on your PC: VSCode is a popular integrated development environment (IDE) for building software.
-- You will need to have node.js installed on your system, with version V10. or higher.
-- npm (node package manager) used for installing and managing dependencies.
+- A text editor: For this tutorial, we will make use of [Visual Studio Code](https://code.visualstudio.com/), so ensure you have VS Code setup on your PC: VSCode is a popular integrated development environment (IDE) for building software.
+- You will need to have [Node.js](https://nodejs.org/en) installed on your system, with version V10. or higher.
+- Npm (node package manager) is used for installing and managing dependencies.
 
 ## What Is a Multi-Sig Wallet?
 
-A multisignature wallet, short for Multi-sig is a type of cryptocurrency wallet that requires multiple signatures (or approvals) from different users or addresses to authorize a transaction. The purpose of a multisig wallet is to provide an extra layer of security and protection against unauthorized transactions, as multiple parties are required to sign off on any transactions.
+A multi-signature wallet, short for multi-sig is a type of cryptocurrency wallet that requires multiple signatures (or approvals) from different users or addresses to authorize a transaction. The purpose of a multi-sig wallet is to provide an extra layer of security and protection against unauthorized transactions, as multiple parties are required to sign off on any transactions.
 
 ### Benefits of Using a Multi-Sig Wallet
 
-1. **Enhanced security**: With multiple signatures required to authorize a transaction, a multisig wallet provides increased security and protection against theft or unauthorized access.
+1. **Enhanced security**: With multiple signatures required to authorize a transaction, a multi-sig wallet provides increased security and protection against theft or unauthorized access.
 
-2. **Shared control**: A multisig wallet allows multiple parties to have shared control over funds, which can be useful for organizations or groups that require collective decision-making.
+2. **Shared control**: A multi-sig wallet allows multiple parties to have shared control over funds, which can be useful for organizations or groups that require collective decision-making.
 
 3. **Reduced risk of human error**: Multisig wallets can reduce the risk of human error, as multiple parties are required to approve transactions, which can help prevent mistakes or fraudulent activity.
 
@@ -66,15 +66,15 @@ A multisignature wallet, short for Multi-sig is a type of cryptocurrency wallet 
 
 ## Factory Contract
 
-A factory contract is a smart contract designed to produce and deploy other smart contracts. In other words, it acts as a template or a blueprint for the creation of new smart contracts. Factory contracts can be used to automate the process of smart contract creation, reducing the time and resources required to develop and deploy new contracts.
+A [factory contract](https://research.csiro.au/blockchainpatterns/general-patterns/contract-structural-patterns/factory-contract/) is a smart contract designed to produce and deploy other smart contracts. In other words, it acts as a template or a blueprint for the creation of new smart contracts. Factory contracts can be used to automate the process of smart contract creation, reducing the time and resources required to develop and deploy new contracts.
 
 ### Types of Factory Contract Patterns
 
 The two factory contract patterns are:
 
-1. **Simple Factory Pattern**: This pattern deploys multiple instances of other contracts without any optimization to save gas on each deployment. This pattern is useful when there are no specific optimization requirements for the smart contracts being deployed.
+1. **[Simple Factory Pattern](https://blog.logrocket.com/cloning-solidity-smart-contracts-factory-pattern/#the-factory-pattern)**: This pattern deploys multiple instances of other contracts without any optimization to save gas on each deployment. This pattern is useful when there are no specific optimization requirements for the smart contracts being deployed.
 
-2. **Cloned Factory Pattern**: This pattern deploys multiple instances of other contracts with emphasis on optimization to save gas on each deployment. This pattern is useful when there is a need to optimize the gas costs associated with deploying smart contracts, which can result in significant cost savings.
+2. **[Cloned Factory Pattern](https://blog.logrocket.com/cloning-solidity-smart-contracts-factory-pattern/#the-cloned-factory-pattern-the-right-pattern-for-deploying-multiple-instances-of-our-solidity-smart-contract)**: This pattern deploys multiple instances of other contracts with an emphasis on optimization to save gas on each deployment. This pattern is useful when there is a need to optimize the gas costs associated with deploying smart contracts, which can result in significant cost savings.
    <br/>
 
 Both patterns can be used to create and deploy multiple instances of smart contracts, but the Cloned Factory Pattern is specifically designed to optimize the gas costs associated with deployment. The choice of which pattern to use will depend on the specific requirements of the project, such as the need for gas optimization or the complexity of the smart contracts being deployed.
@@ -92,26 +92,26 @@ In this tutorial, we will be making use of the Cloned factory pattern.
 
 To begin setting up the Hardhat environment for your smart contract implementation, you will first need to create a new folder on your system. You can do this by using the ‘mkdir’ command in your terminal followed by the desired name of your folder. For example:
 
-```
+```bash
 mkdir multisig-wallet
 ```
 
 Next, navigate to your project folder using the ‘cd’ command, like so:
 
-```
+```bash
 cd multisig-wallet
 ```
 
-Once you have cd into the folder, you can initialize a new npm project inside it by running the following command:
+Once you have changed the directory to the folder, you can initialize a new npm project inside it by running the following command:
 
-```
+```bash
 npm init -y
 ```
 
 This will create a “package.json” file in your project folder with default settings.
 Run the following command to initialize the Hardhat environment and create some default configuration files and folders required for building and testing smart contracts.
 
-```
+```bash
 npm install hardhat --save-dev
 npx hardhat
 ```
@@ -121,7 +121,7 @@ We will be using a typescript project for this tutorial, so click on “Create a
 
 Finally, open your project folder in VScode by running this command in your terminal:
 
-```
+```bash
 code .
 ```
 
@@ -133,7 +133,7 @@ This will open up your project folder in Visual Studio Code, where you can start
 In the root directory of your project, you'll find a folder called "contracts". To create a new TypeScript file, simply navigate to this folder and add your new files.
 <br/>
 
-For this tutorial, we'll be ceating a Multisignature Wallet Minimal Proxy Contract. To create this contracts, we'll need to generate two files:
+For this tutorial, we'll be creating a Multisignature Wallet Minimal Proxy Contract. To create these contracts, we'll need to generate two files:
 
 - Multisig Wallet contract file
 - Minimal Proxy contract file
@@ -289,21 +289,20 @@ contract MultisigWallet {
 }
 ```
 
-The multisignature wallet requires multiple owners to approve transactions before they can be executed. The contract includes the following components:
+The multi-signature wallet requires multiple owners to approve transactions before they can be executed. The contract includes the following components:
 
 - There are state variables that are used to keep track of the state of the contract. These variables include the maximum number of owners allowed, the number of approvals required for a transaction to be executed, the address of the factory that created the contract, an array of valid owners, an array of all transactions, an array of successful transaction IDs, and the ID of the next transaction to be created.
-- The contract has an initialize function that serves as the contract's constructor, it takes an array of valid owners and a quorum (the number of approvals required for a transaction to be executed).
-- The contract has several functions that can be called by anyone who is a valid owner of the contract. These functions include requestTransaction, and approveTransaction.
-- The requestTransaction function allows an owner to create a new transaction by specifying the recipient and amount. The function returns the ID of the newly created transaction.
-- The approveTransaction function allows an owner to approve a transaction by specifying the ID of the transaction. The function checks that the transaction has not already been approved and that the ID is valid.
+- The contract has an `initialize()` function that serves as the contract's constructor, it takes an array of valid owners and a quorum (the number of approvals required for a transaction to be executed).
+- The contract has several functions that can be called by anyone who is a valid owner of the contract. These functions include `requestTransaction()` and `approveTransaction()`.
+- The `requestTransaction()` function allows an owner to create a new transaction by specifying the recipient and amount. The function returns the ID of the newly created transaction.
+- The `approveTransaction()` function allows an owner to approve a transaction by specifying the ID of the transaction. The function checks that the transaction has not already been approved and that the ID is valid.
   If the number of approvals for the transaction meets the required quorum, the function executes the transaction and adds the transaction ID to the list of successful transaction IDs.
 
-- The getTxnsCount function returns the number of transactions that have been created.
-- The getAllowners function returns an array of all valid owners of the contract.
-- The getAlltxnDetails function returns the details of a specific transaction by ID.
-- The getAlltxnsInfo function returns an array of all transactions that have been created.
-- The allSuccessfulTxnIDs function returns an array of all successful transaction IDs.
-- The contract includes a receive function that allows the contract to receive Ether, which is emitted as a Deposit event.
+- The `getTxnsCount()` function returns the number of transactions that have been created.
+- The `getAllowners()` function returns an array of all valid owners of the contract.
+- The `getAlltxnDetails()` function returns the details of a specific transaction by ID.
+- The `allSuccessfulTxnIDs()` function returns an array of all successful transaction IDs.
+- The contract includes a `receive()` function that allows the contract to receive Ether, which is emitted as a Deposit event.
 - The contract also includes some mappings. These mappings include \_transactions (which maps transaction IDs to transaction details), hasApprovedtxn (which maps transaction IDs to the approval status of each owner), and isOwner (which maps addresses to a boolean indicating whether or not the address is a valid owner).
 
 #### Minimal Proxy Contract Explained
@@ -441,18 +440,18 @@ contract MinimalProxy {
 }
 ```
 
-- The contract contains a createClone() function that deploys new instances of the multisig wallet contract by creating a minimal proxy contract. The deployed minimal proxy contract is a lightweight contract that points to the actual implementation contract.
+- The contract contains a `createClone()` function that deploys new instances of the multi-sig wallet contract by creating a minimal proxy contract. The deployed minimal proxy contract is a lightweight contract that points to the actual implementation contract.
 
 **Pictorial Representation of the contract flow**
 ![Minimal Proxy Clone Representation](Images/mclone.png)
 
 - The implementation contract's(Multisig Wallet) address is passed as a parameter to the createClone() function, along with an array of valid signers and a quorum number. The function then creates the minimal proxy using the implementation contract's address and assigns it to a variable named proxy.
 
-- The initialize() function of the implementation contract is then called through the IMultisigWallet(proxy).initialize(validSigners, \_quorum) line, passing the valid signers and quorum as arguments.
+- The `initialize()` function of the implementation contract is then called through the IMultisigWallet(proxy).initialize(validSigners, \_quorum) line, passing the valid signers and quorum as arguments.
 
-- The created proxy contract's address is then stored in the cloneAddresses mapping, and the index of the contract is stored in allClonedMultiSigContractAddresses.
+- The created proxy contract's address is then stored in the cloneAddresses mapping, and the index of the contract is stored in `allClonedMultiSigContractAddresses`.
 
-- There are also view functions defined in the contract to retrieve information about the created contracts. getCloneAddress() takes an index and returns the corresponding clone address, getCurrentIndex() returns the number of created contracts, and isClone() checks if a given address is a clone of the implementation contract.
+- There are also view functions defined in the contract to retrieve information about the created contracts. `getCloneAddress()` takes an index and returns the corresponding clone address, `getCurrentIndex()` returns the number of created contracts, and `isClone()` checks if a given address is a clone of the implementation contract.
 
 - The contract uses assembly code to create the minimal proxy contract. The bytecode for the minimal proxy contract is created by concatenating the initialization code and runtime code, with the implementation contract address inserted in the appropriate location in the bytecode.
 
@@ -465,7 +464,7 @@ Next, add the Celo network configuration to the hardhat.config.ts file located i
 
 - Install the dotenv package:
 
-```
+```bash
 npm install dotenv
 ```
 
@@ -503,7 +502,7 @@ export default config;
 
 ```
 
-Next thing is to write our deploy scripts like so;
+Next thing is to write our deploy scripts as follows:
 
 ```javascript
 import { ethers } from "hardhat";
@@ -536,13 +535,13 @@ main().catch((error) => {
 
 First, let's compile our smart contract using this command line in our VSCode terminal:
 
-```
+```bash
 npx hardhat compile
 ```
 
 Then, let’s deploy our contract using this command line in our VSCode terminal:
 
-```
+```bash
 npx hardhat run scripts/deploy.ts --network alfajores
 ```
 
@@ -562,10 +561,10 @@ Fill in the required information, such as the compiler version used to deploy yo
 
 ![Verification Step 2](Images/vstep2.png)
 
-After clicking "Continue," you will be directed to another page. To authenticate your smart contract, you need to copy and paste its code into the "Enter the Solidity Contract Code below" field. If your contract's constructor function required arguments during deployment, you must also obtain and paste the ABI-encoded argument into the "Constructor Arguments ABI-encoded" field. If no arguments were provided during deployment, you can skip this step.As the contracts used in this tutorial do not contain a constructor function, we can skip that step.
+After clicking "Continue," you will be directed to another page. To authenticate your smart contract, you need to copy and paste its code into the "Enter the Solidity Contract Code below" field. If your contract's constructor function required arguments during deployment, you must also obtain and paste the ABI-encoded argument into the "Constructor Arguments ABI-encoded" field. If no arguments were provided during deployment, you can skip this step. As the contracts used in this tutorial do not contain a constructor function, we can skip that step.
 <br/>
 
-Submit the verification request by clicking the “Verify and Publish” button , and wait for it to be processed. This usually takes a few seconds.
+Submit the verification request by clicking the “Verify and Publish” button, and wait for it to be processed. This usually takes a few seconds.
 <br/>
 
 After successfully verifying your smart contract, you should be able to see it on the Celo Explorer with a green checkmark indicating that it has been verified.
@@ -588,13 +587,13 @@ Navigate to the Minimal Proxy Factory Contract on Celo Testnet [Explorer](https:
 ![Connect to Metamask](Images/connect.png)
 <br/>
 
-To create a clone of the multisig contract, we need to pass 3 arguments, which are;
+To create a clone of the multi-sig contract, we need to pass 3 arguments, which are;
 
 - The implementation contract address(Multisig wallet contract address)
 - Array of valid owners for the new clone we want to create
-- \_quorum(the number of approvals required for a transaction to be executed in the multisig).
+- \_quorum(the number of approvals required for a transaction to be executed in the multi-sig).
 
-Pass in the necessary arguments , and click on the "write" button to confirm the transaction on metamask.
+Pass in the necessary arguments, and click on the "write" button to confirm the transaction on Metamask.
 
 ![Create Clone](Images/write1.png)
 
@@ -602,10 +601,10 @@ To read your minimal proxy contract and obtain the addresses of the newly create
 
 ![Read Minimal proxy](Images/readminimal.png)
 
-Click on the getCloneAddress() and pass an index of 1 to get the first created multisig wallet clone address which you can find [here](https://alfajores.celoscan.io/address/0x331E6b11e985BADEBF94de88dF17E1345C814d1F#code).
+Click on the getCloneAddress() and pass an index of 1 to get the first created multi-sig wallet clone address which you can find [here](https://alfajores.celoscan.io/address/0x331E6b11e985BADEBF94de88dF17E1345C814d1F#code).
 <br/>
 
-Now, let's interact with the created multisig wallet clone contract.
+Now, let's interact with the created multi-sig wallet clone contract.
 
 - Click on the “Write Contract” tab in Celo Explorer.
 - Connect to your Celo wallet by clicking on the “Connect Wallet” button and choosing your wallet provider.
@@ -633,14 +632,14 @@ To validate and approve a transaction, only the designated owners who were added
 
 ![Approve Transaction](Images/approve.png)
 
-You can then proceed to reading the state of the contract after writing to it.
+You can then proceed to read the state of the contract after writing it.
 <br/>
 
-To create your own Minimal Proxy Multisig contract, you can replicate the following steps. By doing so, you will be able to deploy the contract and interact with it through celo explorer in a successful manner. Additionally, it is important to note that proper understanding and execution of these steps is crucial for ensuring the security and functionality of your contract.
+To create your own Minimal Proxy Multisig contract, you can replicate the following steps. By doing so, you will be able to deploy the contract and interact with it through celo explorer in a successful manner. Additionally, it is important to note that proper understanding and execution of these steps are crucial for ensuring the security and functionality of your contract.
 
 ## Conclusion
 
-In conclusion, the minimal proxy multisig contract provides an efficient and secure way for multiple parties to manage their assets and make decisions on the Celo platform. By utilizing minimal proxy contracts, the deployment and maintenance costs are reduced, while the flexibility and control of the multisig functionality remain intact. It is important to carefully consider the ownership structure and security measures when deploying this type of contract to ensure the safety of the assets and the integrity of the decision-making process. I appreciate you staying till the end, and I trust that you have gained valuable insights from this tutorial.
+In conclusion, the minimal proxy multi-sig contract provides an efficient and secure way for multiple parties to manage their assets and make decisions on the Celo platform. By utilizing minimal proxy contracts, the deployment and maintenance costs are reduced, while the flexibility and control of the multi-sig functionality remain intact. It is important to carefully consider the ownership structure and security measures when deploying this type of contract to ensure the safety of the assets and the integrity of the decision-making process. I appreciate you staying till the end, and I trust that you have gained valuable insights from this tutorial.
 <br/>
 
 The link to my project repository can be found [here](https://github.com/Sayrarh/Multi-Sig-Minimal-Proxy-on-Celo).
