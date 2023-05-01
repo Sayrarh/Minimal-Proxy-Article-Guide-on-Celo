@@ -1,4 +1,4 @@
-# Multi-Sig Wallet Minimal Proxy on Celo and its Application in Smart Contracts
+# Multi-Sig Wallet Minimal Proxy on Celo and Its Application in Smart Contracts
 
 ---
 
@@ -10,27 +10,27 @@ With the help of this article, you can follow the step-by-step instructions prov
 
 ## Table of Contents
 
-- [Multi-Sig Wallet Minimal Proxy on Celo and its Application in Smart Contracts](#multi-sig-wallet-minimal-proxy-on-celo-and-its-application-in-smart-contracts)
+- [Multi-Sig Wallet Minimal Proxy on Celo and Its Application in Smart Contracts](#multi-sig-wallet-minimal-proxy-on-celo-and-its-application-in-smart-contracts)
   - [Introduction](#introduction)
   - [Table of Contents](#table-of-contents)
   - [Objective](#objective)
   - [Prerequisites](#prerequisites)
   - [Requirements](#requirements)
-  - [What is a Multi-Sig Wallet?](#what-is-a-multi-sig-wallet)
-    - [Benefits of using a Multi-sig Wallet](#benefits-of-using-a-multi-sig-wallet)
+  - [What Is a Multi-Sig Wallet?](#what-is-a-multi-sig-wallet)
+    - [Benefits of Using a Multi-Sig Wallet](#benefits-of-using-a-multi-sig-wallet)
   - [Factory Contract](#factory-contract)
     - [Types of Factory Contract Patterns](#types-of-factory-contract-patterns)
-    - [Cloned Factory Contract using Minimal Proxy](#cloned-factory-contract-using-minimal-proxy)
+    - [Cloned Factory Contract Using Minimal Proxy](#cloned-factory-contract-using-minimal-proxy)
   - [Tutorial](#tutorial)
-    - [STEP 1 - Set up Hardhat Environment](#step-1---set-up-hardhat-environment)
-    - [STEP 2 - Create your Smart Contracts](#step-2---create-your-smart-contracts)
+    - [Step 1 - Set Up Hardhat Environment](#step-1---set-up-hardhat-environment)
+    - [Step 2 - Create Your Smart Contracts](#step-2---create-your-smart-contracts)
       - [Multisig Wallet Contract Explained](#multisig-wallet-contract-explained)
       - [Minimal Proxy Contract Explained](#minimal-proxy-contract-explained)
-    - [STEP 3 - Deploying your contracts](#step-3---deploying-your-contracts)
-    - [Step 5 — Verifying your contracts](#step-5--verifying-your-contracts)
-    - [STEP 5 - Interacting with the deployed contracts](#step-5---interacting-with-the-deployed-contracts)
-      - [Making a clone of the multisig wallet contract](#making-a-clone-of-the-multisig-wallet-contract)
-    - [Conclusion](#conclusion)
+    - [Step 3 - Deploying Your Contracts](#step-3---deploying-your-contracts)
+    - [Step 4 - Verifying Your Contracts](#step-4---verifying-your-contracts)
+    - [Step 5 - Interacting With the Deployed Contracts](#step-5---interacting-with-the-deployed-contracts)
+      - [Making a Clone of the Multisig Wallet Contract](#making-a-clone-of-the-multisig-wallet-contract)
+  - [Conclusion](#conclusion)
 
 ## Objective
 
@@ -50,11 +50,11 @@ Upon completion of this article, you'll possess the knowledge and skills needed 
 - You will need to have node.js installed on your system, with version V10. or higher.
 - npm (node package manager) used for installing and managing dependencies.
 
-## What is a Multi-Sig Wallet?
+## What Is a Multi-Sig Wallet?
 
 A multisignature wallet, short for Multi-sig is a type of cryptocurrency wallet that requires multiple signatures (or approvals) from different users or addresses to authorize a transaction. The purpose of a multisig wallet is to provide an extra layer of security and protection against unauthorized transactions, as multiple parties are required to sign off on any transactions.
 
-### Benefits of using a Multi-sig Wallet
+### Benefits of Using a Multi-Sig Wallet
 
 1. **Enhanced security**: With multiple signatures required to authorize a transaction, a multisig wallet provides increased security and protection against theft or unauthorized access.
 
@@ -79,7 +79,7 @@ The two factory contract patterns are:
 
 Both patterns can be used to create and deploy multiple instances of smart contracts, but the Cloned Factory Pattern is specifically designed to optimize the gas costs associated with deployment. The choice of which pattern to use will depend on the specific requirements of the project, such as the need for gas optimization or the complexity of the smart contracts being deployed.
 
-### Cloned Factory Contract using Minimal Proxy
+### Cloned Factory Contract Using Minimal Proxy
 
 The Clone Factory Contract is a reference implementation of the [EIP-1167](https://eips.ethereum.org/EIPS/eip-1167) standard, which is an Ethereum Improvement Proposal for creating **Minimal proxy contracts**. The Clone Factory Contract is designed to optimize the gas costs associated with deploying new instances of smart contracts by using a minimal proxy contract that points to a master contract. When a new instance is needed, the minimal proxy contract is cloned and the address of the new contract is updated to point to the new instance. This approach reduces the gas costs associated with deploying new instances because only the minimal proxy contract needs to be deployed once, and subsequent instances can be created by simply cloning the minimal proxy contract and updating the contract address.
 <br/>
@@ -88,7 +88,7 @@ In this tutorial, we will be making use of the Cloned factory pattern.
 
 ## Tutorial
 
-### STEP 1 - Set up Hardhat Environment
+### Step 1 - Set Up Hardhat Environment
 
 To begin setting up the Hardhat environment for your smart contract implementation, you will first need to create a new folder on your system. You can do this by using the ‘mkdir’ command in your terminal followed by the desired name of your folder. For example:
 
@@ -128,7 +128,7 @@ code .
 This will open up your project folder in Visual Studio Code, where you can start setting up your Hardhat environment and writing your smart contract code.
 <br/>
 
-### STEP 2 - Create your Smart Contracts
+### Step 2 - Create Your Smart Contracts
 
 In the root directory of your project, you'll find a folder called "contracts". To create a new TypeScript file, simply navigate to this folder and add your new files.
 <br/>
@@ -456,7 +456,7 @@ contract MinimalProxy {
 
 - The contract uses assembly code to create the minimal proxy contract. The bytecode for the minimal proxy contract is created by concatenating the initialization code and runtime code, with the implementation contract address inserted in the appropriate location in the bytecode.
 
-### STEP 3 - Deploying your contracts
+### Step 3 - Deploying Your Contracts
 
 Before deploying your contract to the Celo testnet, ensure that you have added the Celo testnet RPC to your Metamask wallet, if not follow this [guide](https://docs.celo.org/blog/tutorials/3-simple-steps-to-connect-your-metamask-wallet-to-celo) to add it & also get faucet from this [site](https://faucet.celo.org/alfajores).
 <br/>
@@ -546,7 +546,7 @@ Then, let’s deploy our contract using this command line in our VSCode terminal
 npx hardhat run scripts/deploy.ts --network alfajores
 ```
 
-### Step 5 — Verifying your contracts
+### Step 4 - Verifying Your Contracts
 
 To verify your contracts on the Celo Explorer, you can follow these steps:
 <br/>
@@ -577,11 +577,11 @@ You can do the same for the Minimal Proxy Factory as well.
 - [Multisig Wallet Contract on Celo Testnet Explorer](https://alfajores.celoscan.io/address/0x1844549ed4d5380d38cfe3d873376d988b6379c8#code)
 - [Minimal Proxy Factory Contract on Celo Testnet Explorer](https://alfajores.celoscan.io/address/0xb08cbfc3f899628622b69f2f5002be435f3c7c75#code)
 
-### STEP 5 - Interacting with the deployed contracts
+### Step 5 - Interacting With the Deployed Contracts
 
 After the successful verification and deployment of your smart contract, the subsequent phase involves interacting with it, which often entails utilizing a Web3 interface to invoke the functions specified in the contract and work with its data. In this tutorial, we will leverage Celo Explorer to interact with our smart contract.
 
-#### Making a clone of the multisig wallet contract
+#### Making a Clone of the Multisig Wallet Contract
 
 Navigate to the Minimal Proxy Factory Contract on Celo Testnet [Explorer](https://alfajores.celoscan.io/address/0xb08cbfc3f899628622b69f2f5002be435f3c7c75#code) and click on the "Write Contract" button, then click on "Connect to web3" which will prompt you to either connect to MetaMask or WalletConnect, chose the wallet you are using here.
 
@@ -638,7 +638,7 @@ You can then proceed to reading the state of the contract after writing to it.
 
 To create your own Minimal Proxy Multisig contract, you can replicate the following steps. By doing so, you will be able to deploy the contract and interact with it through celo explorer in a successful manner. Additionally, it is important to note that proper understanding and execution of these steps is crucial for ensuring the security and functionality of your contract.
 
-### Conclusion
+## Conclusion
 
 In conclusion, the minimal proxy multisig contract provides an efficient and secure way for multiple parties to manage their assets and make decisions on the Celo platform. By utilizing minimal proxy contracts, the deployment and maintenance costs are reduced, while the flexibility and control of the multisig functionality remain intact. It is important to carefully consider the ownership structure and security measures when deploying this type of contract to ensure the safety of the assets and the integrity of the decision-making process. I appreciate you staying till the end, and I trust that you have gained valuable insights from this tutorial.
 <br/>
