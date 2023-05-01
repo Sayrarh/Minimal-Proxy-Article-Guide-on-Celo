@@ -16,18 +16,18 @@ With the help of this article, you can follow the step-by-step instructions prov
   - [Objective](#objective)
   - [Prerequisites](#prerequisites)
   - [Requirements](#requirements)
-  - [Factory Contracts](#factory-contracts)
-    - [Types of Factory Contract Pattern](#types-of-factory-contract-pattern)
-    - [Cloned Factory Contract using Minimal Proxy](#cloned-factory-contract-using-minimal-proxy-contract)
-  - [What is a Multi-Sig Wallet?](#what-is-a-multi-sig-wallet?)
+  - [What is a Multi-Sig Wallet?](#what-is-a-multi-sig-wallet)
     - [Benefits of using a Multi-sig Wallet](#benefits-of-using-a-multi-sig-wallet)
+  - [Factory Contract](#factory-contract)
+    - [Types of Factory Contract Patterns](#types-of-factory-contract-patterns)
+    - [Cloned Factory Contract using Minimal Proxy](#cloned-factory-contract-using-minimal-proxy)
   - [Tutorial](#tutorial)
-    - [STEP 1 - Set up Hardhat Environment](#step-1---setup-hardhat-environment)
-    - [STEP 2 - Create your Smart contracts](#step-2---create-your-smart-contracts)
+    - [STEP 1 - Set up Hardhat Environment](#step-1---set-up-hardhat-environment)
+    - [STEP 2 - Create your Smart Contracts](#step-2---create-your-smart-contracts)
       - [Multisig Wallet Contract Explained](#multisig-wallet-contract-explained)
       - [Minimal Proxy Contract Explained](#minimal-proxy-contract-explained)
     - [STEP 3 - Deploying your contracts](#step-3---deploying-your-contracts)
-    - [STEP 4 - Verifying your contracts](#step-4---verifying-your-contracts)
+    - [Step 5 — Verifying your contracts](#step-5--verifying-your-contracts)
     - [STEP 5 - Interacting with the deployed contracts](#step-5---interacting-with-the-deployed-contracts)
       - [Making a clone of the multisig wallet contract](#making-a-clone-of-the-multisig-wallet-contract)
     - [Conclusion](#conclusion)
@@ -161,16 +161,16 @@ contract MultisigWallet {
   address[] validOwners;
 
   struct Transaction {
+
     address recipient;
     uint8 numOfConformations;
     bool approved;
     uint80 amountRequested;
   }
 
-  Transaction[] allTransactions;
   uint256[] successfulTxnIDs;
 
-  uint256 txnID = 1;
+  uint256 txnIDs = 1;
 
   //mapping to keep track of all transactions
   mapping(uint256 => Transaction) _transactions;
@@ -179,6 +179,12 @@ contract MultisigWallet {
   //mapping to check if an address is part of the owners
   mapping(address => bool) isOwner;
 
+
+  /**
+    * @notice Initializes the validOwners and numofApprovalsRequired variables with the input parameters
+    * @param _owners An array containing the addresses of the owners
+    * @param _quorum The number of approval required to validate requests 
+  */
   function initialize(address[] memory _owners, uint8 _quorum) external {
     require(initialState == false, "Contract Already Initialized");
     require(_quorum <= _owners.length, "Out of Bound!");
@@ -190,12 +196,18 @@ contract MultisigWallet {
       isOwner[owner] = true;
     }
 
+    factory = msg.sender;
     validOwners = _owners;
     numofApprovalsRequired = _quorum;
-    factory = msg.sender;
     initialState = true;
   }
 
+  /**
+    * @dev Caller is checked to be a valid owner
+    * @notice Allows an owner to request and create a transaction
+    * @param _to The beneficiary of the request
+    * @param _amount The amount required to fulfill the transaction
+  */
   function requestTransaction(
   address _to,
   uint80 _amount
@@ -203,24 +215,27 @@ contract MultisigWallet {
   isAnOwner(msg.sender);
   notAddressZero(_to);
   require(_amount > 0, "Invalid amount requested"); // New input validation check
-  Transaction storage txn = _transactions[txnID];
+  Transaction storage txn = _transactions[txnIDs];
   txn.recipient = _to;
   txn.amountRequested = _amount;
-  uint256 currentTxnID = txnID;
-  allTransactions.push(txn);
+  uint256 currentTxnID = txnIDs;
 
-  txnID = txnID + 1;
+  txnIDs = txnIDs + 1;
 
   emit TransactionRequested(msg.sender, currentTxnID, _to, _amount);
   return currentTxnID;
 }
 
-
+  /**
+    @dev If quorum is reached, the transaction is approved and the funds are transferred to the beneficiary
+    @notice Allow owners to approve a pending transaction
+    @param _ID The index of the transaction in the _transactions mapping
+  */
   function approveTransaction(uint256 _ID) external {
     isAnOwner(msg.sender);
 
     require(hasApprovedtxn[_ID][msg.sender] == false, "Already Approved");
-    require(_ID > 0 && _ID < txnID, "InvalidID");
+    require(_ID > 0 && _ID < txnIDs, "InvalidID");
 
     Transaction storage txn = _transactions[_ID];
     require(txn.approved == false, "Txn has been completed");
@@ -231,6 +246,7 @@ contract MultisigWallet {
     uint256 amount = txn.amountRequested;
 
     if (txn.numOfConformations >= numofApprovalsRequired) {
+      require(address(this).balance >= amount, "Not enough balance to transfer funds");
       txn.approved = true;
       (bool success, ) = payable(beneficiary).call{ value: amount }("");
       require(success, "txn failed");
@@ -241,7 +257,7 @@ contract MultisigWallet {
   }
 
   function getTxnsCount() external view returns (uint256) {
-    return allTransactions.length;
+    return txnIDs;
   }
 
   function isAnOwner(address user) private view {
@@ -261,10 +277,6 @@ contract MultisigWallet {
   ) external view returns (Transaction memory) {
     Transaction storage txn = _transactions[_ID];
     return txn;
-  }
-
-  function getAlltxnsInfo() external view returns (Transaction[] memory) {
-    return allTransactions;
   }
 
   function allSuccessfulTxnIDs() external view returns (uint256[] memory) {
